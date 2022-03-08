@@ -34,31 +34,57 @@
     <!-- canvas默认为inline元素 -->
     <canvas id="canvas" width="100" height="100"></canvas>
     <script>
-        //画矩形
         let canvas = document.getElementById("canvas");
         canvas.width = document.documentElement.clientWidth
         canvas.height = document.documentElement.clientHeight
         let ctx = canvas.getContext("2d");
-        
-        let painting = false
-        ctx.fillStyle = "black";
-        ctx.strokeStyle = 'none';
+        ctx.fillStyle = "pink";
+        ctx.strokeStyle = 'pink';
+        ctx.lineWidth = 8;
+        ctx.lineCap = "round";
 
-        canvas.onmousedown = () => {
-            painting = true
+        function drawLine(x1, y1, x2, y2) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
         }
-        canvas.onmousemove = (x) => {
-            if (painting === true) {
-                // 画矩形
-                // ctx.fillRect(e.clientX - 5, e.clientY - 5, 10, 10);
-                // 画圆形
+
+        let painting = false
+        let last
+
+
+        let isTouchDevice = 'ontouchstart' in
+            document.documentElement;
+        if (isTouchDevice) {
+            canvas.ontouchmove = (e) => {
+                let x = e.touches[0].clientX
+                let y = e.touches[0].clientY
+                console.log(x, y)
                 ctx.beginPath();
                 // 前面为圆心的X坐标和Y坐标 50为半径 0是整圆
-                ctx.arc(x.clientX,x.clientY, 10, 0, 2 * Math.PI);
+                ctx.arc(x, y, 10, 0, 2 * Math.PI);
                 ctx.stroke();
                 ctx.fill();
-            } else {
-                console.log(什么都不做)
+            }
+        } else {
+            canvas.onmousedown = (e) => {
+                painting = true
+                last = [e.clientX, e.clientY]
+                console.log(last)
+            }
+        }
+        canvas.onmousemove = (e) => {
+
+            if (painting === true) {
+                console.log(last)
+                drawLine(last[0], last[1], e.clientX, e.clientY)
+                // ctx.beginPath();
+                // 前面为圆心的X坐标和Y坐标 50为半径 0是整圆
+                // ctx.arc(x.clientX, x.clientY, 10, 0, 2 * Math.PI);
+                // ctx.stroke();
+                // ctx.fill();
+                last = [e.clientX,e.clientY]
             }
             canvas.onmouseup = () => {
                 painting = false
