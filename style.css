@@ -5,6 +5,8 @@
 }
 #canvas {
     /* 跟屏幕一样高 */
-    height: 100vh;
-    border: 1px solid red;
+    /* height: 100vh; */
+    /* 跟屏幕一样宽 */
+    /* width: 100vw;  */
+    display: block;
 }

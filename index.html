@@ -10,8 +10,8 @@
 </head>
 
 <body>
-    <div id="canvas"></div>
-    <script>
+    <!-- 点击屏幕出现一个小圈圈 -->
+    <!-- <script>
         canvas.onclick = (e) => {
             console.log(e)
             console.log(e.clientX)
@@ -30,6 +30,45 @@
             div.style.backgroundColor = 'black'
             canvas.appendChild(div)
         }
+    </script> -->
+    <!-- canvas默认为inline元素 -->
+    <canvas id="canvas" width="100" height="100"></canvas>
+    <script>
+        //画矩形
+        let canvas = document.getElementById("canvas");
+        canvas.width = document.documentElement.clientWidth
+        canvas.height = document.documentElement.clientHeight
+        let ctx = canvas.getContext("2d");
+        ctx.fillStyle = "pink";
+        ctx.strokeStyle = 'none';
+        let painting = false
+        canvas.onmousedown = () => {
+            painting = true
+        }
+        canvas.onmousemove = (e) => {
+            if (painting === true) {
+                // 画矩形
+                // ctx.fillRect(e.clientX - 5, e.clientY - 5, 10, 10);
+                // 画圆形
+                ctx.beginPath();
+                // 前面为圆心的X坐标和Y坐标 50为半径 0是整圆
+                ctx.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI);
+                ctx.stroke();
+                ctx.fill();
+            } else {
+                console.log(什么都不做)
+            }
+            canvas.onmouseup = () => {
+                painting = false
+            }
+
+            // console.log(e.clientX)
+            // console.log(e.clientY)
+            // 前面两个为控制位置的，后面为宽高
+            // ctx.fillRect(e.clientX - 5, e.clientY - 5, 10, 10);
+
+        }
+
     </script>
 </body>
 
