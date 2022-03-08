@@ -39,20 +39,22 @@
         canvas.width = document.documentElement.clientWidth
         canvas.height = document.documentElement.clientHeight
         let ctx = canvas.getContext("2d");
-        ctx.fillStyle = "pink";
-        ctx.strokeStyle = 'none';
+        
         let painting = false
+        ctx.fillStyle = "black";
+        ctx.strokeStyle = 'none';
+
         canvas.onmousedown = () => {
             painting = true
         }
-        canvas.onmousemove = (e) => {
+        canvas.onmousemove = (x) => {
             if (painting === true) {
                 // 画矩形
                 // ctx.fillRect(e.clientX - 5, e.clientY - 5, 10, 10);
                 // 画圆形
                 ctx.beginPath();
                 // 前面为圆心的X坐标和Y坐标 50为半径 0是整圆
-                ctx.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI);
+                ctx.arc(x.clientX,x.clientY, 10, 0, 2 * Math.PI);
                 ctx.stroke();
                 ctx.fill();
             } else {
